@@ -101,4 +101,48 @@ public class FieldTest {
         assertFalse(success);
     }
 
+    @Test
+    public void iceField_slideSuccessfullyThroughMaze() throws Exception {
+        GameBoard gameBoard = new GameBoardImpl();
+
+        // Maze: ####### #o@@ x# #######
+        new CommandLoad(new String[]{"src/test/resources/ice_simple.maze"}).execute(gameBoard);
+
+        Player player = gameBoard.getPlayer();
+
+        assertEquals(0, player.getStepCount());
+
+        // Erster moveRight → Spieler rutscht auf das Feld neben dem Ziel
+        boolean success1 = player.moveRight();
+        assertTrue(success1);
+        assertEquals(1, player.getStepCount());
+
+        // Zweiter moveRight → ins Ziel
+        boolean success2 = player.moveRight();
+        assertTrue(success2);
+        assertEquals(2, player.getStepCount());
+        assertTrue(gameBoard.isFinished());
+    }
+
+    @Test
+    public void iceField_slideUntilWallAndStopOnIce() throws Exception {
+        GameBoard gameBoard = new GameBoardImpl();
+        new CommandLoad(new String[]{"src/test/resources/ice_wall.maze"}).execute(gameBoard);
+        Player player = gameBoard.getPlayer();
+        // moveDown → Spieler rutscht bis zur Wand
+        boolean success1 = player.moveDown();
+        assertTrue(success1);
+        assertEquals(1, player.getStepCount());
+        //NICHT im Ziel
+        assertFalse(gameBoard.isFinished());
+
+        // Nächstes Feld nach unten ist Wand → weitere Bewegung nach unten NICHT möglich
+        boolean successFail = player.moveDown();
+        assertFalse(successFail);
+        // Schritte sollen sich NICHT erhöht haben
+        assertEquals(1, player.getStepCount());
+    }
+
+
+
 }
