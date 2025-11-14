@@ -75,4 +75,30 @@ public class FieldTest {
         // Game should be finished after moving right twice
         assertTrue(gameBoard.isFinished());
     }
+
+    @Test
+    public void oneWayFieldAllowedDirection() throws Exception {
+        GameBoard gameBoard = new GameBoardImpl();
+        new CommandLoad(new String[]{"src/test/resources/oneway_allowed.maze"}).execute(gameBoard);
+        Player player = gameBoard.getPlayer();
+
+        assertTrue(player.moveRight());
+
+        boolean success = player.moveRight();
+        assertTrue(success);
+    }
+
+
+    @Test
+    public void oneWayFieldBlockedDirection() throws Exception {
+        GameBoard gameBoard = new GameBoardImpl();
+        new CommandLoad(new String[]{"src/test/resources/oneway_blocked.maze"}).execute(gameBoard);
+        Player player = gameBoard.getPlayer();
+
+        assertTrue(player.moveRight());
+
+        boolean success = player.moveUp();
+        assertFalse(success);
+    }
+
 }
