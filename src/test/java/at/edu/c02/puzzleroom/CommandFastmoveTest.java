@@ -1,15 +1,10 @@
 package at.edu.c02.puzzleroom;
 
-import at.edu.c02.puzzleroom.GameBoard;
-import at.edu.c02.puzzleroom.commands.Command;
 import at.edu.c02.puzzleroom.commands.CommandFastmove;
 import at.edu.c02.puzzleroom.commands.CommandLoad;
-import at.edu.c02.puzzleroom.commands.CommandMove;
 import at.edu.c02.puzzleroom.exceptions.PuzzleRoomInvalidMoveException;
 
 import org.junit.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class CommandFastmoveTest {
 
